@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Anselman</title>
-    <meta name="description" content="Designer & developer." />
+    <title>Ryan Anselman</title>
+    <meta name="description" content="Ryan Anselman" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="/src/style.css" />
 
     <!-- Link-share preview cards -->
-    <meta property="og:title" content="Anselman" />
-    <meta property="og:description" content="Designer & developer." />
+    <meta property="og:title" content="Ryan Anselman" />
+    <meta property="og:description" content="Ryan Anselman" />
     <meta property="og:url" content="https://anselman.com" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://anselman.com/preview.gif" />
@@ -26,8 +26,7 @@
     <meta property="og:image:width" content="600" />
     <meta property="og:image:height" content="338" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Anselman" />
-    <meta name="twitter:description" content="Designer & developer." />
+    <meta name="twitter:title" content="Ryan Anselman" />
     <meta name="twitter:image" content="https://anselman.com/preview.gif" />
 
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin />
@@ -57,7 +56,7 @@
         loading="eager"
       ></iframe>
 
-      <!-- Mobile fallback: native <video> with the same color grade baked in. -->
+      <!-- Mobile fallback: native <video> with color grade baked in. -->
       <video
         id="lamp-fallback"
         class="lamp-fallback"
@@ -69,26 +68,22 @@
         preload="auto"
         aria-hidden="true"
       ></video>
-
-      <!-- Slight darken so portfolio text stays readable over the moving lamp. -->
-      <div class="readability-veil" aria-hidden="true"></div>
     </div>
 
     <div class="tungsten-glow"></div>
 
     <main class="portfolio">
       <section class="hero">
-        <p class="kicker">designer · developer</p>
-        <h1 class="name">Anselman</h1>
-        <p class="tagline">Building things that feel like something.</p>
+        <h1 class="name">Ryan Anselman</h1>
+        <p class="hero-quote-text">&hellip;</p>
+        <p class="hero-quote-author">&nbsp;</p>
       </section>
 
       <section class="about">
         <h2 class="section-label">About</h2>
         <p>
           Replace this paragraph with a short bio — who you are, what you build,
-          what you care about. Two or three sentences is enough. Recruiters skim;
-          they remember tone more than detail.
+          what you care about. Two or three sentences is enough.
         </p>
       </section>
 
@@ -116,25 +111,109 @@
     </main>
 
     <!--
-      Force play on the YT iframe so Safari is more likely to autoplay.
-      No curtain/reveal logic here — portfolio content is visible immediately;
-      lamp loads in the background.
+      Curtain hides the YT/OS media-session overlay during the first
+      seconds of autoplay. A randomly-picked quote shows in the curtain
+      AND populates the hero tagline below the name, so the visitor's
+      first read of the page is the same line they'll see persisting
+      under the name when the curtain lifts.
     -->
+    <div class="lamp-curtain">
+      <div class="curtain-quote">
+        <p class="curtain-quote-text">&hellip;</p>
+        <p class="curtain-quote-author">&nbsp;</p>
+      </div>
+    </div>
+
     <script>
       (() => {
+        // Curated list — lesser-known, weighty, no Pinterest-recycled quotes.
+        // Each entry: [quote, author].
+        const QUOTES = [
+          ["Civilization is like a thin layer of ice upon a deep ocean of chaos and darkness.", "Werner Herzog"],
+          ["The poet must not avert his eyes.", "Werner Herzog"],
+          ["Tourism is sin, and travel on foot virtue.", "Werner Herzog"],
+          ["Beauty is mysterious as well as terrible. God and the devil are fighting there, and the battlefield is the heart of man.", "Fyodor Dostoevsky"],
+          ["Above all, don't lie to yourself.", "Fyodor Dostoevsky"],
+          ["The mystery of human existence lies not in just staying alive, but in finding something to live for.", "Fyodor Dostoevsky"],
+          ["Everyone thinks of changing the world, but no one thinks of changing himself.", "Leo Tolstoy"],
+          ["No man ever steps in the same river twice, for it is not the same river and he is not the same man.", "Heraclitus"],
+          ["Anxiety is the dizziness of freedom.", "Søren Kierkegaard"],
+          ["Life can only be understood backwards; but it must be lived forwards.", "Søren Kierkegaard"],
+          ["I am nothing. I shall always be nothing. I cannot wish to be anything. Aside from that, I have within me all the dreams of the world.", "Fernando Pessoa"],
+          ["It is not worth the bother of killing yourself, since you always kill yourself too late.", "Emil Cioran"],
+          ["Whereof one cannot speak, thereof one must be silent.", "Ludwig Wittgenstein"],
+          ["Attention is the rarest and purest form of generosity.", "Simone Weil"],
+          ["All sins are attempts to fill voids.", "Simone Weil"],
+          ["It is no measure of health to be well adjusted to a profoundly sick society.", "Jiddu Krishnamurti"],
+          ["When I let go of what I am, I become what I might be.", "Lao Tzu"],
+          ["The mind of the perfect man is like a mirror. It grasps nothing. It expects nothing. It reflects but does not hold.", "Chuang Tzu"],
+          ["I have always imagined that Paradise will be a kind of library.", "Jorge Luis Borges"],
+          ["Don't talk unless you can improve the silence.", "Jorge Luis Borges"],
+          ["The inferno of the living is not something that will be; if there is one, it is what is already here, the inferno where we live every day.", "Italo Calvino"],
+          ["Be patient toward all that is unsolved in your heart and try to love the questions themselves.", "Rainer Maria Rilke"],
+          ["The only journey is the one within.", "Rainer Maria Rilke"],
+          ["A book must be the axe for the frozen sea within us.", "Franz Kafka"],
+          ["From a certain point onward there is no longer any turning back. That is the point that must be reached.", "Franz Kafka"],
+          ["In the depth of winter, I finally learned that there was within me an invincible summer.", "Albert Camus"],
+          ["Between the wish and the thing the world lies waiting.", "Cormac McCarthy"],
+          ["You forget what you want to remember, and you remember what you want to forget.", "Cormac McCarthy"],
+          ["How we spend our days is, of course, how we spend our lives.", "Annie Dillard"],
+          ["We do not remember days, we remember moments.", "Cesare Pavese"],
+          ["The richness of life lies in memories we have forgotten.", "Cesare Pavese"],
+          ["Every man is born as many men and dies as a single one.", "Martin Heidegger"],
+          ["Do not seek to follow in the footsteps of the wise. Seek what they sought.", "Matsuo Bashō"],
+          ["Talent hits a target no one else can hit; genius hits a target no one else can see.", "Arthur Schopenhauer"],
+          ["The past is never dead. It's not even past.", "William Faulkner"],
+        ];
+
+        const [quoteText, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+
+        // Populate both the curtain and the hero tagline with the same quote.
+        for (const sel of ['.curtain-quote-text', '.hero-quote-text']) {
+          const el = document.querySelector(sel);
+          if (el) el.textContent = '“' + quoteText + '”';
+        }
+        for (const sel of ['.curtain-quote-author', '.hero-quote-author']) {
+          const el = document.querySelector(sel);
+          if (el) el.textContent = '— ' + author;
+        }
+
+        // YT IFrame API: lift on PLAYING.
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         document.head.appendChild(tag);
+
+        let lifted = false;
+        const lift = () => {
+          if (lifted) return;
+          lifted = true;
+          const c = document.querySelector('.lamp-curtain');
+          if (c) c.classList.add('lift');
+        };
 
         window.onYouTubeIframeAPIReady = () => {
           new YT.Player('lamp-video', {
             events: {
               onReady: (e) => {
                 try { e.target.mute(); e.target.playVideo(); } catch (_) {}
+                if (e.target.getPlayerState() === YT.PlayerState.PLAYING) lift();
+              },
+              onStateChange: (e) => {
+                if (e.data === YT.PlayerState.PLAYING) lift();
               },
             },
           });
         };
+
+        // Mobile fallback <video> path
+        const fallback = document.getElementById('lamp-fallback');
+        if (fallback) {
+          fallback.addEventListener('playing', lift, { once: true });
+          fallback.addEventListener('canplay', lift, { once: true });
+        }
+
+        // Safety net
+        setTimeout(lift, 6000);
       })();
     </script>
   </body>

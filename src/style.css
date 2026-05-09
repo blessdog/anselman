@@ -6,7 +6,7 @@ body, html {
   width: 100%;
   min-height: 100%;
   background: #0a0410;
-  color: rgba(255, 220, 180, 0.95);
+  color: rgba(255, 220, 180, 0.96);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +18,7 @@ a {
 }
 
 
-/* ─── Lamp backdrop (same as bongpot, fixed full-viewport) ──────────────── */
+/* ─── Lamp backdrop ──────────────────────────────────────────────────────── */
 
 .lamp-stage {
   position: fixed;
@@ -58,25 +58,18 @@ a {
 }
 
 /*
-  Soft darkening overlay so portfolio text stays legible over the bright
-  parts of the lamp. Still lets the lamp move underneath.
+  Warm ambient bottom glow. Linear gradient bottom→transparent so the
+  lamp's orange has somewhere to bleed into. Strengthened a bit from
+  bongpot since this page has more text on top.
 */
-.readability-veil {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 100%);
-  pointer-events: none;
-}
-
-/* Warm ambient bottom glow, same as bongpot */
 .tungsten-glow {
   position: fixed;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(255, 140, 0, 0.18) 0%,
-    rgba(200, 60, 0, 0.10) 30%,
-    rgba(140, 30, 0, 0.03) 65%,
+    rgba(255, 140, 0, 0.22) 0%,
+    rgba(220, 80, 20, 0.13) 28%,
+    rgba(150, 40, 0, 0.05) 60%,
     transparent 100%
   );
   z-index: 1;
@@ -111,41 +104,47 @@ a {
 .hero {
   min-height: 100vh;
 }
-.kicker {
-  font-size: 0.78rem;
-  font-weight: 400;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  margin: 0 0 2.5rem;
-}
 .name {
   font-size: clamp(3.5rem, 11vw, 9rem);
   font-weight: 200;
   letter-spacing: -0.03em;
   line-height: 0.95;
   margin: 0;
-  color: rgba(255, 230, 200, 1);
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
-}
-.tagline {
-  font-size: clamp(1.05rem, 2vw, 1.5rem);
-  font-style: italic;
-  font-weight: 300;
-  margin: 2rem 0 0;
-  max-width: 32rem;
-  opacity: 0.8;
-  line-height: 1.5;
+  color: rgba(255, 235, 210, 1);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* Section header — small all-caps, tracked-out */
+/* Hero quote — sits under name as the "tagline". Same words as the
+   curtain quote, smaller treatment so it reads as a frame for the name. */
+.hero-quote-text {
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+  font-style: italic;
+  font-weight: 300;
+  margin: 2.5rem 0 0;
+  max-width: 36rem;
+  line-height: 1.55;
+  opacity: 0.92;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
+}
+.hero-quote-author {
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 1.1rem 0 0;
+  opacity: 0.55;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Section labels — tracked-out caps */
 .section-label {
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.55;
   margin: 0 0 2.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* About */
@@ -156,25 +155,26 @@ a {
   max-width: 36rem;
   margin: 0;
   opacity: 0.95;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
 }
 
-/* Work — narrow project list */
+/* Work */
 .work {
   max-width: 44rem;
 }
 .project {
-  border-top: 1px solid rgba(255, 220, 180, 0.18);
+  border-top: 1px solid rgba(255, 220, 180, 0.20);
   padding: 1.75rem 0;
 }
 .project:last-child {
-  border-bottom: 1px solid rgba(255, 220, 180, 0.18);
+  border-bottom: 1px solid rgba(255, 220, 180, 0.20);
 }
 .project h3 {
   font-size: clamp(1.3rem, 2.4vw, 1.8rem);
   font-weight: 300;
   margin: 0 0 0.5rem;
   letter-spacing: -0.01em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
 }
 .project h3 a {
   text-decoration: none;
@@ -188,11 +188,12 @@ a {
 .project p {
   font-size: 0.98rem;
   line-height: 1.5;
-  opacity: 0.7;
+  opacity: 0.78;
   margin: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
-/* Contact — minimal link row */
+/* Contact */
 .contact {
   min-height: 50vh;
   display: flex !important;
@@ -203,17 +204,70 @@ a {
   font-size: 0.85rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 .contact a {
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 220, 180, 0.25);
+  border-bottom: 1px solid rgba(255, 220, 180, 0.3);
   padding-bottom: 4px;
   transition: border-color 0.3s, color 0.3s;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 .contact a:hover {
-  border-bottom-color: rgba(255, 180, 110, 0.9);
-  color: rgba(255, 220, 180, 1);
+  border-bottom-color: rgba(255, 180, 110, 0.95);
+  color: rgba(255, 230, 200, 1);
+}
+
+
+/* ─── Curtain (matches bongpot logic: 5s solid hold + 1.5s fade) ────────── */
+
+.lamp-curtain {
+  position: fixed;
+  inset: 0;
+  background: #1a0d47;
+  z-index: 10;  /* above portfolio content */
+  pointer-events: none;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8vw;
+  /* JS-disabled fallback */
+  animation: curtain-fade 6.5s linear 4s forwards;
+}
+.lamp-curtain.lift {
+  animation: curtain-fade 6.5s linear forwards;
+}
+@keyframes curtain-fade {
+  0%, 77% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+
+.curtain-quote {
+  color: rgba(255, 180, 110, 0.92);
+  text-align: center;
+  max-width: min(44rem, 88vw);
+  animation: curtain-breathe 5s ease-in-out infinite;
+}
+.curtain-quote-text {
+  font-size: clamp(1.15rem, 2.4vw, 1.85rem);
+  font-style: italic;
+  font-weight: 250;
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+  margin: 0;
+}
+.curtain-quote-author {
+  font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 1.4em 0 0;
+}
+@keyframes curtain-breathe {
+  0%, 100% { opacity: 0.78; }
+  50%      { opacity: 1; }
 }
 
 
