@@ -121,17 +121,15 @@
     </main>
 
     <!--
-      Intro scene. Animated canvas overlay that hides the lamp's load state.
-      Palm-Springs-at-night vibe: dark sky with twinkling stars, mountain
-      silhouette, audio-visualizer-style wavy descending lines in warm amber,
-      cactus + palm silhouettes in the foreground. Small "hi, I'm Ryan" text
-      bottom-left. Fades into the lamp as soon as the player reports playing.
+      Splash overlay. Job: in 3 seconds, confirm "yes, this is Ryan
+      Anselman's site" so the busy visitor doesn't bounce. Then fade
+      to the lamp. Long enough hold (5.6s) to cover the OS pause button
+      and YouTube title flash during autoplay.
     -->
     <div class="intro-scene">
-      <canvas id="intro-canvas" class="intro-canvas" aria-hidden="true"></canvas>
-      <div class="intro-text">
-        <p class="intro-name">hi, i'm ryan.</p>
-        <p class="intro-subtitle">a journey, mostly.</p>
+      <div class="intro-greeting">
+        <p class="intro-line">Ryan Anselman</p>
+        <p class="intro-sub">welcome.</p>
       </div>
     </div>
 
@@ -182,150 +180,6 @@
         if (qText) qText.textContent = '“' + quoteText + '”';
         if (qAuthor) qAuthor.textContent = '— ' + author;
 
-        // ─── Intro-scene canvas: stars, mountain, wavy lines, silhouettes ──
-        const canvas = document.getElementById('intro-canvas');
-        const ctx = canvas.getContext('2d');
-        const dpr = window.devicePixelRatio || 1;
-        let cw = 0, ch = 0;
-        let raf = null;
-        let stopped = false;
-
-        function resize() {
-          cw = canvas.clientWidth;
-          ch = canvas.clientHeight;
-          canvas.width = Math.round(cw * dpr);
-          canvas.height = Math.round(ch * dpr);
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        // Stars
-        const stars = [];
-        for (let i = 0; i < 100; i++) {
-          stars.push({
-            x: Math.random(),     // normalized 0..1 → x = .x * cw
-            y: Math.random() * 0.55,
-            size: 0.6 + Math.random() * 1.6,
-            base: 0.25 + Math.random() * 0.6,
-            phase: Math.random() * Math.PI * 2,
-          });
-        }
-
-        // Cactus + palm tree silhouette positions (normalized x)
-        const fixtures = [
-          { type: 'cactus', x: 0.12, scale: 0.85 },
-          { type: 'cactus', x: 0.88, scale: 0.65 },
-          { type: 'palm',   x: 0.72, scale: 1.0 },
-        ];
-
-        function drawCactus(x, baseY, scale) {
-          ctx.fillStyle = '#000';
-          const h = 60 * scale;
-          ctx.fillRect(x - 4, baseY - h, 8, h);
-          // left arm
-          ctx.fillRect(x - 16, baseY - h * 0.55, 12, 4);
-          ctx.fillRect(x - 16, baseY - h * 0.55 - 14, 4, 18);
-          // right arm
-          ctx.fillRect(x + 4,  baseY - h * 0.7,  14, 4);
-          ctx.fillRect(x + 14, baseY - h * 0.7 - 18, 4, 22);
-        }
-        function drawPalm(x, baseY, scale) {
-          ctx.fillStyle = '#000';
-          const h = 90 * scale;
-          // trunk (curved)
-          ctx.beginPath();
-          for (let i = 0; i <= h; i += 1) {
-            const off = Math.sin(i * 0.04) * 5;
-            ctx.fillRect(x + off - 1.5, baseY - i, 3, 1);
-          }
-          // fronds
-          const top = baseY - h;
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = '#000';
-          for (let i = -2; i <= 2; i++) {
-            const angle = -Math.PI / 2 + i * 0.5;
-            const len = 26 + Math.random() * 6;
-            ctx.beginPath();
-            ctx.moveTo(x, top);
-            const ex = x + Math.cos(angle) * len;
-            const ey = top + Math.sin(angle) * len;
-            const cpx = x + Math.cos(angle) * len * 0.5;
-            const cpy = top + Math.sin(angle) * len * 0.3;
-            ctx.quadraticCurveTo(cpx, cpy, ex, ey);
-            ctx.stroke();
-          }
-        }
-
-        function frame(t) {
-          if (stopped) return;
-
-          // Background: dark night sky with warm horizon
-          const grad = ctx.createLinearGradient(0, 0, 0, ch);
-          grad.addColorStop(0,    '#0a0410');
-          grad.addColorStop(0.45, '#180816');
-          grad.addColorStop(0.78, '#3b0e08');
-          grad.addColorStop(1,    '#5e1a04');
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, cw, ch);
-
-          // Stars
-          for (const s of stars) {
-            const tw = 0.55 + 0.45 * Math.sin(t * 0.001 + s.phase);
-            ctx.fillStyle = `rgba(255, 220, 180, ${s.base * tw * 0.85})`;
-            const x = s.x * cw, y = s.y * ch;
-            ctx.fillRect(x, y, s.size, s.size);
-          }
-
-          // Mountain silhouette
-          const mountY = ch * 0.62;
-          ctx.fillStyle = '#0a0410';
-          ctx.beginPath();
-          ctx.moveTo(0, mountY);
-          for (let x = 0; x <= cw; x += 6) {
-            const y = mountY - (Math.sin(x * 0.011) * 26 + Math.sin(x * 0.034) * 14 + Math.sin(x * 0.07) * 5);
-            ctx.lineTo(x, y);
-          }
-          ctx.lineTo(cw, ch);
-          ctx.lineTo(0, ch);
-          ctx.closePath();
-          ctx.fill();
-
-          // Wavy descending lines — audio-visualizer / topographic feel
-          const lineCount = 26;
-          const startY = ch * 0.66;
-          const endY = ch * 0.96;
-          for (let i = 0; i < lineCount; i++) {
-            const ratio = i / (lineCount - 1);
-            const y0 = startY + (endY - startY) * ratio;
-            const opacity = 0.22 + ratio * 0.5;
-            const amp = 3 + ratio * 11;
-            const freq = 0.012 + ratio * 0.004;
-            const r = 255;
-            const g = Math.round(120 + ratio * 70);
-            const b = Math.round(35 + ratio * 25);
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-            ctx.lineWidth = 0.7 + ratio * 0.6;
-            ctx.beginPath();
-            for (let x = 0; x <= cw; x += 3) {
-              const y = y0 + Math.sin(x * freq + t * 0.0008 * (1 + ratio * 0.4) + i * 0.45) * amp;
-              if (x === 0) ctx.moveTo(x, y);
-              else ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-          }
-
-          // Foreground silhouettes
-          for (const f of fixtures) {
-            const baseY = ch * 0.92;
-            if (f.type === 'cactus') drawCactus(f.x * cw, baseY, f.scale);
-            else if (f.type === 'palm') drawPalm(f.x * cw, baseY, f.scale);
-          }
-
-          raf = requestAnimationFrame(frame);
-        }
-        raf = requestAnimationFrame(frame);
-
         // ─── YT IFrame API + intro-scene fade ────────────────────────────
         const apiTag = document.createElement('script');
         apiTag.src = 'https://www.youtube.com/iframe_api';
@@ -336,11 +190,7 @@
           if (lifted) return;
           lifted = true;
           const c = document.querySelector('.intro-scene');
-          if (c) {
-            c.classList.add('lift');
-            // Stop the canvas loop after the fade completes.
-            setTimeout(() => { stopped = true; }, 4000);
-          }
+          if (c) c.classList.add('lift');
         };
 
         window.onYouTubeIframeAPIReady = () => {
