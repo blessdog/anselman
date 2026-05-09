@@ -6,12 +6,6 @@
     <title>Ryan Anselman</title>
     <meta name="description" content="Ryan Anselman" />
 
-    <!--
-      Favicons — actual lamp-blob frame masked by luminance so the dark
-      purple background drops to transparent and only the wax silhouette
-      remains. SVG link removed so browsers use the PNG (organic shape
-      vs. the previous geometric SVG sphere).
-    -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
@@ -20,7 +14,6 @@
 
     <link rel="stylesheet" href="/src/style.css" />
 
-    <!-- Link-share preview cards -->
     <meta property="og:title" content="Ryan Anselman" />
     <meta property="og:description" content="Ryan Anselman" />
     <meta property="og:url" content="https://anselman.com" />
@@ -37,7 +30,6 @@
     <link rel="preconnect" href="https://www.youtube.com" crossorigin />
   </head>
   <body>
-    <!-- Split-tone color filter (desktop only — disabled on touch via CSS) -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
       <filter id="splittone" color-interpolation-filters="sRGB">
         <feColorMatrix type="saturate" values="0"/>
@@ -60,7 +52,6 @@
         loading="eager"
       ></iframe>
 
-      <!-- Mobile fallback: native <video> with color grade baked in. -->
       <video
         id="lamp-fallback"
         class="lamp-fallback"
@@ -77,18 +68,19 @@
     <div class="tungsten-glow"></div>
 
     <main class="portfolio">
-      <section class="hero">
-        <div class="hero-name-block">
-          <h1 class="name">Ryan Anselman</h1>
-          <p class="hero-intro">
-            A brief intro about you — what you do, what you build, what you care about.
-            One or two sentences. Replace this with your actual blurb.
-          </p>
-        </div>
-        <div class="hero-quote-block">
-          <p class="hero-quote-text">&hellip;</p>
-          <p class="hero-quote-author">&nbsp;</p>
-        </div>
+      <!--
+        First viewport is intentionally empty — just the lamp drifting,
+        completely clean. The visitor lands, takes it in, and starts to
+        scroll. Content begins immediately on scroll.
+      -->
+      <section class="hero" aria-hidden="true"></section>
+
+      <section class="intro-section">
+        <h1 class="name">Ryan Anselman</h1>
+        <p class="hero-intro">
+          A brief intro about you — what you do, what you build, what you care about.
+          One or two sentences. Replace this with your actual blurb.
+        </p>
       </section>
 
       <section class="about">
@@ -120,27 +112,31 @@
         <a href="https://linkedin.com/in/REPLACE" target="_blank" rel="noopener">linkedin</a>
         <a href="https://github.com/blessdog" target="_blank" rel="noopener">github</a>
       </section>
+
+      <section class="quote-of-the-day">
+        <h2 class="section-label">Quote of the day</h2>
+        <p class="quote-of-the-day-text">&hellip;</p>
+        <p class="quote-of-the-day-author">&nbsp;</p>
+      </section>
     </main>
 
     <!--
-      Curtain hides the YT/OS media-session overlay during the first
-      seconds of autoplay. A randomly-picked quote shows in the curtain
-      AND populates the hero tagline below the name, so the visitor's
-      first read of the page is the same line they'll see persisting
-      under the name when the curtain lifts.
+      Intro scene. Animated canvas overlay that hides the lamp's load state.
+      Palm-Springs-at-night vibe: dark sky with twinkling stars, mountain
+      silhouette, audio-visualizer-style wavy descending lines in warm amber,
+      cactus + palm silhouettes in the foreground. Small "hi, I'm Ryan" text
+      bottom-left. Fades into the lamp as soon as the player reports playing.
     -->
-    <div class="lamp-curtain">
-      <div class="curtain-quote">
-        <p class="curtain-intro">Hi, I'm Ryan. I picked this one out for you.</p>
-        <p class="curtain-quote-text">&hellip;</p>
-        <p class="curtain-quote-author">&nbsp;</p>
+    <div class="intro-scene">
+      <canvas id="intro-canvas" class="intro-canvas" aria-hidden="true"></canvas>
+      <div class="intro-text">
+        <p class="intro-name">hi, i'm ryan.</p>
+        <p class="intro-subtitle">a journey, mostly.</p>
       </div>
     </div>
 
     <script>
       (() => {
-        // Curated list — lesser-known, weighty, no Pinterest-recycled quotes.
-        // Each entry: [quote, author].
         const QUOTES = [
           ["Civilization is like a thin layer of ice upon a deep ocean of chaos and darkness.", "Werner Herzog"],
           ["The poet must not avert his eyes.", "Werner Herzog"],
@@ -179,29 +175,172 @@
           ["The past is never dead. It's not even past.", "William Faulkner"],
         ];
 
+        // Pick one random quote per page load → quote of the day section.
         const [quoteText, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+        const qText = document.querySelector('.quote-of-the-day-text');
+        const qAuthor = document.querySelector('.quote-of-the-day-author');
+        if (qText) qText.textContent = '“' + quoteText + '”';
+        if (qAuthor) qAuthor.textContent = '— ' + author;
 
-        // Populate both the curtain and the hero tagline with the same quote.
-        for (const sel of ['.curtain-quote-text', '.hero-quote-text']) {
-          const el = document.querySelector(sel);
-          if (el) el.textContent = '“' + quoteText + '”';
+        // ─── Intro-scene canvas: stars, mountain, wavy lines, silhouettes ──
+        const canvas = document.getElementById('intro-canvas');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        let cw = 0, ch = 0;
+        let raf = null;
+        let stopped = false;
+
+        function resize() {
+          cw = canvas.clientWidth;
+          ch = canvas.clientHeight;
+          canvas.width = Math.round(cw * dpr);
+          canvas.height = Math.round(ch * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
-        for (const sel of ['.curtain-quote-author', '.hero-quote-author']) {
-          const el = document.querySelector(sel);
-          if (el) el.textContent = '— ' + author;
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Stars
+        const stars = [];
+        for (let i = 0; i < 100; i++) {
+          stars.push({
+            x: Math.random(),     // normalized 0..1 → x = .x * cw
+            y: Math.random() * 0.55,
+            size: 0.6 + Math.random() * 1.6,
+            base: 0.25 + Math.random() * 0.6,
+            phase: Math.random() * Math.PI * 2,
+          });
         }
 
-        // YT IFrame API: lift on PLAYING.
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.head.appendChild(tag);
+        // Cactus + palm tree silhouette positions (normalized x)
+        const fixtures = [
+          { type: 'cactus', x: 0.12, scale: 0.85 },
+          { type: 'cactus', x: 0.88, scale: 0.65 },
+          { type: 'palm',   x: 0.72, scale: 1.0 },
+        ];
+
+        function drawCactus(x, baseY, scale) {
+          ctx.fillStyle = '#000';
+          const h = 60 * scale;
+          ctx.fillRect(x - 4, baseY - h, 8, h);
+          // left arm
+          ctx.fillRect(x - 16, baseY - h * 0.55, 12, 4);
+          ctx.fillRect(x - 16, baseY - h * 0.55 - 14, 4, 18);
+          // right arm
+          ctx.fillRect(x + 4,  baseY - h * 0.7,  14, 4);
+          ctx.fillRect(x + 14, baseY - h * 0.7 - 18, 4, 22);
+        }
+        function drawPalm(x, baseY, scale) {
+          ctx.fillStyle = '#000';
+          const h = 90 * scale;
+          // trunk (curved)
+          ctx.beginPath();
+          for (let i = 0; i <= h; i += 1) {
+            const off = Math.sin(i * 0.04) * 5;
+            ctx.fillRect(x + off - 1.5, baseY - i, 3, 1);
+          }
+          // fronds
+          const top = baseY - h;
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#000';
+          for (let i = -2; i <= 2; i++) {
+            const angle = -Math.PI / 2 + i * 0.5;
+            const len = 26 + Math.random() * 6;
+            ctx.beginPath();
+            ctx.moveTo(x, top);
+            const ex = x + Math.cos(angle) * len;
+            const ey = top + Math.sin(angle) * len;
+            const cpx = x + Math.cos(angle) * len * 0.5;
+            const cpy = top + Math.sin(angle) * len * 0.3;
+            ctx.quadraticCurveTo(cpx, cpy, ex, ey);
+            ctx.stroke();
+          }
+        }
+
+        function frame(t) {
+          if (stopped) return;
+
+          // Background: dark night sky with warm horizon
+          const grad = ctx.createLinearGradient(0, 0, 0, ch);
+          grad.addColorStop(0,    '#0a0410');
+          grad.addColorStop(0.45, '#180816');
+          grad.addColorStop(0.78, '#3b0e08');
+          grad.addColorStop(1,    '#5e1a04');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, cw, ch);
+
+          // Stars
+          for (const s of stars) {
+            const tw = 0.55 + 0.45 * Math.sin(t * 0.001 + s.phase);
+            ctx.fillStyle = `rgba(255, 220, 180, ${s.base * tw * 0.85})`;
+            const x = s.x * cw, y = s.y * ch;
+            ctx.fillRect(x, y, s.size, s.size);
+          }
+
+          // Mountain silhouette
+          const mountY = ch * 0.62;
+          ctx.fillStyle = '#0a0410';
+          ctx.beginPath();
+          ctx.moveTo(0, mountY);
+          for (let x = 0; x <= cw; x += 6) {
+            const y = mountY - (Math.sin(x * 0.011) * 26 + Math.sin(x * 0.034) * 14 + Math.sin(x * 0.07) * 5);
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(cw, ch);
+          ctx.lineTo(0, ch);
+          ctx.closePath();
+          ctx.fill();
+
+          // Wavy descending lines — audio-visualizer / topographic feel
+          const lineCount = 26;
+          const startY = ch * 0.66;
+          const endY = ch * 0.96;
+          for (let i = 0; i < lineCount; i++) {
+            const ratio = i / (lineCount - 1);
+            const y0 = startY + (endY - startY) * ratio;
+            const opacity = 0.22 + ratio * 0.5;
+            const amp = 3 + ratio * 11;
+            const freq = 0.012 + ratio * 0.004;
+            const r = 255;
+            const g = Math.round(120 + ratio * 70);
+            const b = Math.round(35 + ratio * 25);
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+            ctx.lineWidth = 0.7 + ratio * 0.6;
+            ctx.beginPath();
+            for (let x = 0; x <= cw; x += 3) {
+              const y = y0 + Math.sin(x * freq + t * 0.0008 * (1 + ratio * 0.4) + i * 0.45) * amp;
+              if (x === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+          }
+
+          // Foreground silhouettes
+          for (const f of fixtures) {
+            const baseY = ch * 0.92;
+            if (f.type === 'cactus') drawCactus(f.x * cw, baseY, f.scale);
+            else if (f.type === 'palm') drawPalm(f.x * cw, baseY, f.scale);
+          }
+
+          raf = requestAnimationFrame(frame);
+        }
+        raf = requestAnimationFrame(frame);
+
+        // ─── YT IFrame API + intro-scene fade ────────────────────────────
+        const apiTag = document.createElement('script');
+        apiTag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(apiTag);
 
         let lifted = false;
         const lift = () => {
           if (lifted) return;
           lifted = true;
-          const c = document.querySelector('.lamp-curtain');
-          if (c) c.classList.add('lift');
+          const c = document.querySelector('.intro-scene');
+          if (c) {
+            c.classList.add('lift');
+            // Stop the canvas loop after the fade completes.
+            setTimeout(() => { stopped = true; }, 4000);
+          }
         };
 
         window.onYouTubeIframeAPIReady = () => {
@@ -218,14 +357,12 @@
           });
         };
 
-        // Mobile fallback <video> path
         const fallback = document.getElementById('lamp-fallback');
         if (fallback) {
           fallback.addEventListener('playing', lift, { once: true });
           fallback.addEventListener('canplay', lift, { once: true });
         }
 
-        // Safety net
         setTimeout(lift, 6000);
       })();
     </script>
