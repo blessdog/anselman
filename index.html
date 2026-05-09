@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Anselman</title>
+    <meta name="description" content="Designer & developer." />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+
+    <link rel="stylesheet" href="/src/style.css" />
+
+    <!-- Link-share preview cards -->
+    <meta property="og:title" content="Anselman" />
+    <meta property="og:description" content="Designer & developer." />
+    <meta property="og:url" content="https://anselman.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://anselman.com/preview.gif" />
+    <meta property="og:image:type" content="image/gif" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="338" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Anselman" />
+    <meta name="twitter:description" content="Designer & developer." />
+    <meta name="twitter:image" content="https://anselman.com/preview.gif" />
+
+    <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin />
+    <link rel="preconnect" href="https://www.youtube.com" crossorigin />
+  </head>
+  <body>
+    <!-- Split-tone color filter (desktop only — disabled on touch via CSS) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <filter id="splittone" color-interpolation-filters="sRGB">
+        <feColorMatrix type="saturate" values="0"/>
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0.10 0.40 0.74 0.96 1.00"/>
+          <feFuncG type="table" tableValues="0.05 0.22 0.45 0.60 0.72"/>
+          <feFuncB type="table" tableValues="0.28 0.45 0.30 0.14 0.04"/>
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
+    <div class="lamp-stage">
+      <iframe
+        id="lamp-video"
+        class="lamp-video"
+        src="https://www.youtube-nocookie.com/embed/lPInO0xV8x4?autoplay=1&mute=1&controls=0&loop=1&playlist=lPInO0xV8x4&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1&vq=hd1080&hd=1&enablejsapi=1"
+        title="Lava lamp"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        loading="eager"
+      ></iframe>
+
+      <!-- Mobile fallback: native <video> with the same color grade baked in. -->
+      <video
+        id="lamp-fallback"
+        class="lamp-fallback"
+        src="/lamp-mobile.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      ></video>
+
+      <!-- Slight darken so portfolio text stays readable over the moving lamp. -->
+      <div class="readability-veil" aria-hidden="true"></div>
+    </div>
+
+    <div class="tungsten-glow"></div>
+
+    <main class="portfolio">
+      <section class="hero">
+        <p class="kicker">designer · developer</p>
+        <h1 class="name">Anselman</h1>
+        <p class="tagline">Building things that feel like something.</p>
+      </section>
+
+      <section class="about">
+        <h2 class="section-label">About</h2>
+        <p>
+          Replace this paragraph with a short bio — who you are, what you build,
+          what you care about. Two or three sentences is enough. Recruiters skim;
+          they remember tone more than detail.
+        </p>
+      </section>
+
+      <section class="work">
+        <h2 class="section-label">Selected work</h2>
+        <article class="project">
+          <h3><a href="https://bongpot.com" target="_blank" rel="noopener">bongpot.com</a></h3>
+          <p>A psychedelic lava lamp for your screen. Real footage, color-graded, served as ambient backdrop.</p>
+        </article>
+        <article class="project">
+          <h3><a href="#" target="_blank" rel="noopener">Project two</a></h3>
+          <p>One-line description. Replace href + text with a real project.</p>
+        </article>
+        <article class="project">
+          <h3><a href="#" target="_blank" rel="noopener">Project three</a></h3>
+          <p>One-line description. Replace href + text with a real project.</p>
+        </article>
+      </section>
+
+      <section class="contact">
+        <a href="mailto:hello@anselman.com">email</a>
+        <a href="https://linkedin.com/in/REPLACE" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://github.com/blessdog" target="_blank" rel="noopener">github</a>
+      </section>
+    </main>
+
+    <!--
+      Force play on the YT iframe so Safari is more likely to autoplay.
+      No curtain/reveal logic here — portfolio content is visible immediately;
+      lamp loads in the background.
+    -->
+    <script>
+      (() => {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = () => {
+          new YT.Player('lamp-video', {
+            events: {
+              onReady: (e) => {
+                try { e.target.mute(); e.target.playVideo(); } catch (_) {}
+              },
+            },
+          });
+        };
+      })();
+    </script>
+  </body>
+</html>
