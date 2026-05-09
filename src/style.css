@@ -74,12 +74,20 @@ a {
 
 /* ─── Portfolio content layer ───────────────────────────────────────────── */
 
+/*
+  All content lives in a narrow column pinned to the LEFT margin so the
+  lamp's center stays uncovered. The column width clamps with viewport so
+  mid-size screens don't push text into the lamp body. Mobile collapses
+  to a tight single column overlaid on the lamp (acceptable — lamp scales
+  too, and we keep text-shadow strong for legibility).
+*/
 .portfolio {
   position: relative;
   z-index: 2;
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 0 8vw;
+  max-width: clamp(16rem, 28vw, 24rem);
+  margin: 0;
+  padding-left: clamp(1.25rem, 5vw, 4rem);
+  padding-right: 0;
   pointer-events: none;
 }
 .portfolio a,
@@ -87,43 +95,37 @@ a {
   pointer-events: auto;
 }
 
-/*
-  Hero — completely empty, full first viewport. Just the lamp drifting.
-  No text, no overlay. Visitor lands, takes it in, scrolls a bit and
-  content begins immediately.
-*/
+/* Empty hero — just lamp, clean. */
 .hero {
   min-height: 100vh;
   padding: 0;
 }
 
 /*
-  Intro section — name + brief blurb. Sits *immediately* below the hero
-  so the visitor barely has to scroll to find the first content. ~70vh
-  rather than full 100vh so it reaches them faster.
+  Intro section — name + brief blurb. Compact (~55vh) so the visitor
+  reaches it with a small scroll. Sits in the left margin column.
 */
 .intro-section {
-  min-height: 70vh;
+  min-height: 55vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8vh 0;
+  padding: 6vh 0;
 }
 .name {
-  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-size: clamp(2rem, 3.6vw, 3rem);
   font-weight: 200;
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.05;
   margin: 0;
   color: rgba(255, 235, 210, 1);
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
 }
 .hero-intro {
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
   font-weight: 300;
-  line-height: 1.65;
-  margin: 1.75rem 0 0;
-  max-width: 36rem;
+  line-height: 1.6;
+  margin: 1.5rem 0 0;
   opacity: 0.92;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
 }
@@ -141,17 +143,16 @@ a {
 
 /* About */
 .about {
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 6vh 0;
 }
 .about p {
-  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
   font-weight: 300;
-  line-height: 1.6;
-  max-width: 36rem;
+  line-height: 1.65;
   margin: 0;
   opacity: 0.95;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
@@ -159,24 +160,23 @@ a {
 
 /* Work */
 .work {
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 6vh 0;
-  max-width: 44rem;
 }
 .project {
-  border-top: 1px solid rgba(255, 220, 180, 0.20);
-  padding: 1.75rem 0;
+  border-top: 1px solid rgba(255, 220, 180, 0.22);
+  padding: 1.25rem 0;
 }
 .project:last-child {
-  border-bottom: 1px solid rgba(255, 220, 180, 0.20);
+  border-bottom: 1px solid rgba(255, 220, 180, 0.22);
 }
 .project h3 {
-  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
   font-weight: 300;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
   letter-spacing: -0.01em;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
 }
@@ -190,23 +190,22 @@ a {
   border-bottom-color: rgba(255, 180, 110, 0.7);
 }
 .project p {
-  font-size: 0.98rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   opacity: 0.78;
   margin: 0;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
-/* Contact */
+/* Contact — vertical stack to stay in narrow column */
 .contact {
-  min-height: 50vh;
+  min-height: 40vh;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
   padding: 6vh 0;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   opacity: 0.9;
@@ -223,17 +222,16 @@ a {
   color: rgba(255, 230, 200, 1);
 }
 
-/* Quote of the day — subtle bottom section */
+/* Quote of the day */
 .quote-of-the-day {
-  min-height: 60vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8vh 0 12vh;
-  max-width: 44rem;
+  padding: 6vh 0 10vh;
 }
 .quote-of-the-day-text {
-  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
   font-style: italic;
   font-weight: 300;
   line-height: 1.55;
@@ -242,11 +240,11 @@ a {
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
 }
 .quote-of-the-day-author {
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin: 1.4rem 0 0;
+  margin: 1.1rem 0 0;
   opacity: 0.55;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
@@ -303,11 +301,28 @@ a {
 
 /* ─── Mobile tightening ─────────────────────────────────────────────────── */
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .portfolio {
-    padding: 0 6vw;
+    /*
+      Mobile: lamp covers full viewport, no real margin to tuck into, so
+      give text a single-column overlay with comfortable padding. Strong
+      text-shadows in the section styles keep legibility over the lamp.
+    */
+    max-width: 100%;
+    padding-left: 6vw;
+    padding-right: 6vw;
   }
-  .portfolio section {
-    padding: 8vh 0;
+  .intro-section {
+    min-height: 45vh;
+  }
+  .about, .work {
+    min-height: 50vh;
+  }
+  .contact {
+    min-height: 30vh;
+  }
+  .quote-of-the-day {
+    min-height: 40vh;
+    padding-bottom: 8vh;
   }
 }
