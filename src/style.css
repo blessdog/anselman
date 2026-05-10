@@ -18,7 +18,7 @@ a {
 }
 
 
-/* ─── Lamp backdrop ──────────────────────────────────────────────────────── */
+/* ─── Lamp backdrop — self-hosted graded video ───────────────────────────── */
 
 .lamp-stage {
   position: fixed;
@@ -26,23 +26,9 @@ a {
   overflow: hidden;
   background: #0a0410;
   z-index: 0;
-  filter: url(#splittone);
 }
 
-@media (hover: none) and (pointer: coarse) {
-  .lamp-stage {
-    filter: none;
-  }
-  .lamp-video {
-    display: none !important;
-  }
-  .lamp-fallback {
-    display: block !important;
-  }
-}
-
-.lamp-video,
-.lamp-fallback {
+.lamp-bg {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -52,9 +38,6 @@ a {
   border: 0;
   pointer-events: none;
   object-fit: cover;
-}
-.lamp-fallback {
-  display: none;
 }
 
 .tungsten-glow {

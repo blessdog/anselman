@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="blob" cx="35%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#fff5d8"/>
+      <stop offset="12%" stop-color="#ffcc70"/>
+      <stop offset="38%" stop-color="#ff6e1a"/>
+      <stop offset="72%" stop-color="#a82500"/>
+      <stop offset="100%" stop-color="#3a0c00"/>
+    </radialGradient>
+  </defs>
+  <!--
+    Warbly asymmetric blob — fills ~85% of the icon area like Anthropic's
+    asterisk fills its space. Each curve is intentionally uneven so it
+    reads as an organic dollop, not a sphere.
+  -->
+  <path d="M 50 6
+           C 28 4, 8 18, 8 38
+           C 8 58, 22 76, 44 78
+           C 64 80, 84 70, 92 50
+           C 96 30, 88 12, 70 6
+           C 60 3, 54 5, 50 6 Z"
+        fill="url(#blob)"/>
+</svg>
