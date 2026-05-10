@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <radialGradient id="blob" cx="35%" cy="28%" r="72%">
+    <radialGradient id="blob" cx="50%" cy="48%" r="62%">
       <stop offset="0%" stop-color="#fff5d8"/>
       <stop offset="12%" stop-color="#ffcc70"/>
       <stop offset="38%" stop-color="#ff6e1a"/>
@@ -9,15 +9,15 @@
     </radialGradient>
   </defs>
   <!--
-    Warbly asymmetric blob — fills ~85% of the icon area like Anthropic's
-    asterisk fills its space. Each curve is intentionally uneven so it
-    reads as an organic dollop, not a sphere.
+    Settled-blob silhouette: wide and squat, sitting in the lower portion
+    of the canvas with a smooth dome top. Empty space at the top of the
+    icon reads as "the blob has landed at the base of the lamp" — clearly
+    not a sphere even at 16px.
   -->
-  <path d="M 50 6
-           C 28 4, 8 18, 8 38
-           C 8 58, 22 76, 44 78
-           C 64 80, 84 70, 92 50
-           C 96 30, 88 12, 70 6
-           C 60 3, 54 5, 50 6 Z"
+  <path d="M 50 28
+           C 30 28, 12 38, 8 56
+           C 4 76, 18 90, 50 90
+           C 80 90, 96 74, 92 56
+           C 88 36, 70 26, 50 28 Z"
         fill="url(#blob)"/>
 </svg>

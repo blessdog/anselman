@@ -40,6 +40,21 @@ a {
   object-fit: cover;
 }
 
+/*
+  Hide Safari/iOS HTML5-video controls overlay. When autoplay is blocked
+  (Low Power Mode, per-site "Never Auto-Play", etc.) Safari overlays a
+  large play button on top of the video. The watchdog JS calls play() on
+  the user's first interaction so the video starts the moment they touch
+  the page — these rules ensure they never see the button in the meantime.
+*/
+.lamp-bg::-webkit-media-controls,
+.lamp-bg::-webkit-media-controls-panel,
+.lamp-bg::-webkit-media-controls-overlay-play-button,
+.lamp-bg::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+
 .tungsten-glow {
   position: fixed;
   inset: 0;

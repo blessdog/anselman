@@ -190,9 +190,25 @@
         if (qText) qText.textContent = '“' + quoteText + '”';
         if (qAuthor) qAuthor.textContent = '— ' + author;
 
-        // No splash overlay — the lamp video starts playing the moment
-        // the page renders, and the dark .lamp-stage background covers
-        // any sub-second gap before first frame.
+        // Watchdog: any time the lamp video pauses, stalls, or the tab
+        // refocuses, try to play it again. Also try on the first user
+        // interaction so browsers that hard-blocked autoplay (Safari Low
+        // Power, per-site "Never Auto-Play") still hand us a play() the
+        // moment the user touches the page.
+        const video = document.getElementById('lamp-bg');
+        if (video) {
+          const tryPlay = () => video.play().catch(() => {});
+          tryPlay();
+          ['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach((evt) => {
+            document.addEventListener(evt, tryPlay, { passive: true });
+          });
+          video.addEventListener('pause', tryPlay);
+          video.addEventListener('stalled', tryPlay);
+          video.addEventListener('waiting', tryPlay);
+          document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) tryPlay();
+          });
+        }
       })();
     </script>
   </body>
