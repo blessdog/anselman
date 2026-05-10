@@ -106,19 +106,6 @@
       </section>
     </main>
 
-    <!--
-      Splash overlay. Job: in 3 seconds, confirm "yes, this is Ryan
-      Anselman's site" so the busy visitor doesn't bounce. Then fade
-      to the lamp. Long enough hold (5.6s) to cover the OS pause button
-      and YouTube title flash during autoplay.
-    -->
-    <div class="intro-scene">
-      <div class="intro-greeting">
-        <p class="intro-line">Ryan Anselman</p>
-        <p class="intro-sub">welcome.</p>
-      </div>
-    </div>
-
     <script>
       (() => {
         const QUOTES = [
@@ -166,23 +153,9 @@
         if (qText) qText.textContent = '“' + quoteText + '”';
         if (qAuthor) qAuthor.textContent = '— ' + author;
 
-        // ─── Lift the splash when the lamp video starts playing ──────────
-        let lifted = false;
-        const lift = () => {
-          if (lifted) return;
-          lifted = true;
-          const c = document.querySelector('.intro-scene');
-          if (c) c.classList.add('lift');
-        };
-
-        const lamp = document.getElementById('lamp-bg');
-        if (lamp) {
-          lamp.addEventListener('playing', lift, { once: true });
-          lamp.addEventListener('canplay', lift, { once: true });
-        }
-
-        // Safety net — broken JS or video failure still reaches the page.
-        setTimeout(lift, 5000);
+        // No splash overlay — the lamp video starts playing the moment
+        // the page renders, and the dark .lamp-stage background covers
+        // any sub-second gap before first frame.
       })();
     </script>
   </body>

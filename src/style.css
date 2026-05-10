@@ -233,62 +233,6 @@ a {
 }
 
 
-/* ─── Intro overlay — simple, long enough to hide YT chrome flash ──────── */
-
-.intro-scene {
-  position: fixed;
-  inset: 0;
-  background: #1a0d47;
-  z-index: 10;
-  pointer-events: none;
-  opacity: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 6vw;
-  /* JS-disabled fallback: 4s pre-delay + 8s fade animation = 12s max. */
-  animation: intro-fade 8s linear 4s forwards;
-}
-.intro-scene.lift {
-  /* JS path: ~5.6s solid hold + ~2.4s gradual fade. */
-  animation: intro-fade 8s linear forwards;
-}
-@keyframes intro-fade {
-  0%, 70% { opacity: 1; }
-  100%    { opacity: 0; }
-}
-
-.intro-greeting {
-  text-align: center;
-  color: rgba(255, 215, 175, 0.95);
-  animation: intro-breathe 4.5s ease-in-out infinite;
-}
-/*
-  Primary line is the visitor's "you're in the right place" anchor —
-  full name, clean and big, no italics. Subtitle is the warm flourish.
-*/
-.intro-line {
-  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
-  font-weight: 200;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  margin: 0;
-}
-.intro-sub {
-  font-size: clamp(0.7rem, 1vw, 0.85rem);
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.3em;
-  text-transform: lowercase;
-  opacity: 0.6;
-  margin: 1.8em 0 0;
-}
-@keyframes intro-breathe {
-  0%, 100% { opacity: 0.88; }
-  50%      { opacity: 1; }
-}
-
-
 /* ─── Mobile tightening ─────────────────────────────────────────────────── */
 
 @media (max-width: 720px) {
