@@ -130,6 +130,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 1.1rem;
   padding: 6vh 0;
 }
 .about p {
