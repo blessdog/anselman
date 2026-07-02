@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Ryan Anselman</title>
-    <meta name="description" content="Self-taught engineer in Denver building AI products — voice tools, agent systems, and ambient things like the lava lamp behind this page." />
+    <meta name="description" content="Ryan Anselman — AI product engineer in Denver. Voice AI, MCP-driven agent systems, and NLP pipelines, designed, built, and shipped solo." />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -14,9 +14,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
 
     <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.js"></script>
 
     <meta property="og:title" content="Ryan Anselman" />
-    <meta property="og:description" content="Engineer in Denver building AI products — voice tools, agent systems, and ambient things like the lava lamp behind this page." />
+    <meta property="og:description" content="AI product engineer in Denver — voice AI, MCP agent systems, NLP pipelines. Lava lamp included." />
     <meta property="og:url" content="https://anselman.com" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://anselman.com/preview.gif" />
@@ -25,15 +26,14 @@
     <meta property="og:image:height" content="338" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Ryan Anselman" />
-    <meta name="twitter:description" content="Engineer in Denver building AI products — voice tools, agent systems, and ambient things like the lava lamp behind this page." />
+    <meta name="twitter:description" content="AI product engineer in Denver — voice AI, MCP agent systems, NLP pipelines. Lava lamp included." />
     <meta name="twitter:image" content="https://anselman.com/preview.gif" />
-
   </head>
   <body>
     <!--
       Lamp backdrop — self-hosted 1080p video with the lavender/orange
-      grade baked in. No iframe = no YouTube chrome, no media-session
-      pause-button overlay, no Safari autoplay quirks. 90s seamless loop.
+      grade baked in. No iframe, no Safari autoplay quirks. Watchdog at
+      the bottom of the page keeps it playing through pauses/stalls.
     -->
     <div class="lamp-stage">
       <video
@@ -52,144 +52,25 @@
       ></video>
     </div>
 
-    <div class="tungsten-glow"></div>
+    <div class="tungsten-glow" aria-hidden="true"></div>
 
-    <main class="portfolio">
-      <!--
-        First viewport is intentionally empty — just the lamp drifting,
-        completely clean. The visitor lands, takes it in, and starts to
-        scroll. Content begins immediately on scroll.
-      -->
-      <section class="hero" aria-hidden="true"></section>
+    <div class="forum">
+      <header class="forum__header">
+        <p class="forum__wordmark"><a href="/">anselman<span class="tld">.com</span></a></p>
+        <nav class="forum__nav">
+          <a href="/">home</a><span class="sep">·</span><a href="/feed">feed</a><span class="sep">·</span><a href="/resume.pdf" target="_blank">resume</a><span class="sep">·</span><a href="https://github.com/blessdog" target="_blank" rel="noopener">github</a>
+        </nav>
+      </header>
 
-      <section class="intro-section">
-        <h1 class="name">Ryan Anselman</h1>
-        <p class="hero-intro">
-          AI product engineer in Denver. Voice tools, MCP-driven agent systems,
-          NLP pipelines.
-        </p>
-      </section>
+      <main id="root"></main>
 
-      <section class="about">
-        <h2 class="section-label">About</h2>
-        <p>
-          Self-taught. Path here ran through cell biology coursework at
-          Evergreen, firmware validation at Micron, and network buildouts
-          for Meta data centers.
-        </p>
-        <p>
-          Three years of independent building since. Voice AI, MCP-driven
-          agent systems, NLP pipelines, browser automation.
-        </p>
-        <p>
-          Denver. Open to work.
-        </p>
-      </section>
-
-      <section class="work">
-        <h2 class="section-label">Selected work</h2>
-
-        <article class="project">
-          <h3><a href="https://write-on.app" target="_blank" rel="noopener">Write-On</a></h3>
-          <p>
-            Push-to-talk voice transcription for macOS. Real-time Deepgram
-            Nova-3 streaming with pause-and-resume and a last-utterance
-            preview. Swift, SwiftUI, AVFoundation, Deepgram SDK.
-          </p>
-        </article>
-
-        <article class="project">
-          <h3><a href="https://yapzapp.com" target="_blank" rel="noopener">YapZapp</a></h3>
-          <p>
-            Passive voice capture with LLM-based intent routing — content
-            classified and routed to the right destination as you speak.
-            Web today; native iOS in active development with Metal-shader
-            waveform rendering and a system-wide keyboard extension.
-          </p>
-        </article>
-
-        <article class="project">
-          <h3><a href="https://github.com/blessdog/blessdog" target="_blank" rel="noopener">BlessDog Music System</a></h3>
-          <p>
-            AI-controlled Ableton Live. Dual-MCP-server architecture exposing
-            40+ tools to LLM agents for clip creation, MIDI sequencing,
-            mixing, and device control. Five-stage pipeline: OSC bridge, MCP
-            tool server, sample library indexer, session template builder,
-            reference-track analyzer (Demucs + librosa).
-          </p>
-        </article>
-
-        <article class="project">
-          <h3><a href="https://github.com/blessdog/chronology_mvp" target="_blank" rel="noopener">TortWin</a></h3>
-          <p>
-            Medical chronology MVP for personal injury law firms. AWS
-            Textract Medical for OCR, BioClinicalBERT and scispaCy for entity
-            extraction, timeline assembly with duplicate consolidation.
-            Python, FastAPI, React, PostgreSQL with pgvector.
-          </p>
-        </article>
-      </section>
-
-      <section class="contact">
-        <a href="mailto:hello@anselman.com">email</a>
-        <a href="https://linkedin.com/in/ryan-anselman" target="_blank" rel="noopener">linkedin</a>
-        <a href="https://github.com/blessdog" target="_blank" rel="noopener">github</a>
-      </section>
-
-      <section class="quote-of-the-day">
-        <h2 class="section-label">Quote of the day</h2>
-        <p class="quote-of-the-day-text">&hellip;</p>
-        <p class="quote-of-the-day-author">&nbsp;</p>
-      </section>
-    </main>
+      <footer class="forum__footer">
+        <p>made in lava with lamp · © 2026 anselman</p>
+      </footer>
+    </div>
 
     <script>
       (() => {
-        const QUOTES = [
-          ["Civilization is like a thin layer of ice upon a deep ocean of chaos and darkness.", "Werner Herzog"],
-          ["The poet must not avert his eyes.", "Werner Herzog"],
-          ["Tourism is sin, and travel on foot virtue.", "Werner Herzog"],
-          ["Beauty is mysterious as well as terrible. God and the devil are fighting there, and the battlefield is the heart of man.", "Fyodor Dostoevsky"],
-          ["Above all, don't lie to yourself.", "Fyodor Dostoevsky"],
-          ["The mystery of human existence lies not in just staying alive, but in finding something to live for.", "Fyodor Dostoevsky"],
-          ["Everyone thinks of changing the world, but no one thinks of changing himself.", "Leo Tolstoy"],
-          ["No man ever steps in the same river twice, for it is not the same river and he is not the same man.", "Heraclitus"],
-          ["Anxiety is the dizziness of freedom.", "Søren Kierkegaard"],
-          ["Life can only be understood backwards; but it must be lived forwards.", "Søren Kierkegaard"],
-          ["I am nothing. I shall always be nothing. I cannot wish to be anything. Aside from that, I have within me all the dreams of the world.", "Fernando Pessoa"],
-          ["It is not worth the bother of killing yourself, since you always kill yourself too late.", "Emil Cioran"],
-          ["Whereof one cannot speak, thereof one must be silent.", "Ludwig Wittgenstein"],
-          ["Attention is the rarest and purest form of generosity.", "Simone Weil"],
-          ["All sins are attempts to fill voids.", "Simone Weil"],
-          ["It is no measure of health to be well adjusted to a profoundly sick society.", "Jiddu Krishnamurti"],
-          ["When I let go of what I am, I become what I might be.", "Lao Tzu"],
-          ["The mind of the perfect man is like a mirror. It grasps nothing. It expects nothing. It reflects but does not hold.", "Chuang Tzu"],
-          ["I have always imagined that Paradise will be a kind of library.", "Jorge Luis Borges"],
-          ["Don't talk unless you can improve the silence.", "Jorge Luis Borges"],
-          ["The inferno of the living is not something that will be; if there is one, it is what is already here, the inferno where we live every day.", "Italo Calvino"],
-          ["Be patient toward all that is unsolved in your heart and try to love the questions themselves.", "Rainer Maria Rilke"],
-          ["The only journey is the one within.", "Rainer Maria Rilke"],
-          ["A book must be the axe for the frozen sea within us.", "Franz Kafka"],
-          ["From a certain point onward there is no longer any turning back. That is the point that must be reached.", "Franz Kafka"],
-          ["In the depth of winter, I finally learned that there was within me an invincible summer.", "Albert Camus"],
-          ["Between the wish and the thing the world lies waiting.", "Cormac McCarthy"],
-          ["You forget what you want to remember, and you remember what you want to forget.", "Cormac McCarthy"],
-          ["How we spend our days is, of course, how we spend our lives.", "Annie Dillard"],
-          ["We do not remember days, we remember moments.", "Cesare Pavese"],
-          ["The richness of life lies in memories we have forgotten.", "Cesare Pavese"],
-          ["Every man is born as many men and dies as a single one.", "Martin Heidegger"],
-          ["Do not seek to follow in the footsteps of the wise. Seek what they sought.", "Matsuo Bashō"],
-          ["Talent hits a target no one else can hit; genius hits a target no one else can see.", "Arthur Schopenhauer"],
-          ["The past is never dead. It's not even past.", "William Faulkner"],
-        ];
-
-        // Pick one random quote per page load → quote of the day section.
-        const [quoteText, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-        const qText = document.querySelector('.quote-of-the-day-text');
-        const qAuthor = document.querySelector('.quote-of-the-day-author');
-        if (qText) qText.textContent = '“' + quoteText + '”';
-        if (qAuthor) qAuthor.textContent = '— ' + author;
-
         // Watchdog: any time the lamp video pauses, stalls, or the tab
         // refocuses, try to play it again. Also try on the first user
         // interaction so browsers that hard-blocked autoplay (Safari Low
