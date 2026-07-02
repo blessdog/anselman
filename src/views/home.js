@@ -66,17 +66,23 @@ export async function homeView() {
       <h2 class="section__title">About</h2>
       <div class="section__body">
         <p>
-          The path here ran through firmware validation at Micron —
-          Python test automation for SSD and memory controllers — and network
-          infrastructure buildouts for Meta data centers, where I was promoted
-          to project lead mid-engagement and finished the buildout on schedule.
+          Since 2024 I've been building AI products end to end and shipping
+          them: Write-On, a macOS voice transcription app in daily production
+          use; YapZapp, voice-to-intent capture with LLM routing; BlessDog, a
+          dual-MCP-server system driving Ableton Live through 40+ agent tools;
+          TortWin, a clinical-NLP chronology pipeline; JobCanon, multi-ATS
+          browser automation. I work the full stack — Swift on macOS/iOS,
+          Python and TypeScript services, React and vanilla-JS frontends,
+          Postgres — and I ship.
         </p>
         <p>
-          Since 2024 I've been building AI products end to end: voice
-          transcription in daily production use, agentic tooling on the MCP
-          protocol, clinical-NLP pipelines, and browser automation. I work the
-          full stack — Swift on macOS/iOS, Python and TypeScript services,
-          React and vanilla-JS frontends, Postgres — and I ship.
+          Before that: firmware validation at Micron — Python test automation
+          for SSD and memory controllers — and network infrastructure
+          buildouts for Meta data centers, where I was promoted to project
+          lead mid-engagement and finished the buildout on schedule. Before
+          any of that I sold, door to door and then as a team lead carrying my
+          own quota — which is why customer discovery is part of how I build,
+          not a separate department.
         </p>
       </div>
     </section>
@@ -132,11 +138,9 @@ const QUOTES = [
   ['No man ever steps in the same river twice, for it is not the same river and he is not the same man.', 'Heraclitus'],
   ['Anxiety is the dizziness of freedom.', 'Søren Kierkegaard'],
   ['Life can only be understood backwards; but it must be lived forwards.', 'Søren Kierkegaard'],
-  ['I am nothing. I shall always be nothing. I cannot wish to be anything. Aside from that, I have within me all the dreams of the world.', 'Fernando Pessoa'],
   ['Whereof one cannot speak, thereof one must be silent.', 'Ludwig Wittgenstein'],
   ['Attention is the rarest and purest form of generosity.', 'Simone Weil'],
   ['All sins are attempts to fill voids.', 'Simone Weil'],
-  ['It is no measure of health to be well adjusted to a profoundly sick society.', 'Jiddu Krishnamurti'],
   ['When I let go of what I am, I become what I might be.', 'Lao Tzu'],
   ['The mind of the perfect man is like a mirror. It grasps nothing. It expects nothing. It reflects but does not hold.', 'Chuang Tzu'],
   ['I have always imagined that Paradise will be a kind of library.', 'Jorge Luis Borges'],
