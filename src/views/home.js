@@ -1,42 +1,60 @@
-// Home — recruiter-facing portfolio. Type-on-lamp, no surfaces. Copy is
-// kept in lockstep with the canonical resume (jobhard-v2/profiles/resume.md);
-// if one changes, change the other.
+import { NOTES } from '../content/notes.js';
 
-const PROJECTS = [
+const SYSTEMS = [
   {
+    eyebrow: 'Realtime desktop systems',
     name: 'Write-On',
     href: 'https://write-on.app',
-    blurb:
-      'Shipped push-to-talk voice transcription for macOS, in daily use. Real-time Deepgram Nova-3 streaming with pause-and-resume and a last-utterance preview.',
-    tech: 'Swift · SwiftUI · AVFoundation · Deepgram SDK',
+    blurb: 'A native macOS transcription app built around live audio capture, Deepgram Nova-3 streaming, explicit pause-and-resume state, and a last-utterance preview.',
+    tech: 'Swift / SwiftUI / AVFoundation / Deepgram',
   },
   {
-    name: 'YapZapp',
-    href: 'https://yapzapp.com',
-    blurb:
-      'Passive voice capture with LLM-based intent routing — ramble freely and the backend classifies and routes content where it belongs. Web shipped; native iOS in active development with Metal-shader waveform rendering.',
-    tech: 'Swift · SwiftUI · Metal · Anthropic API',
-  },
-  {
+    eyebrow: 'Tool protocols & automation',
     name: 'BlessDog Music System',
     href: 'https://github.com/blessdog/blessdog',
-    blurb:
-      'AI-controlled Ableton Live. Dual-MCP-server architecture exposing 40+ tools to LLM agents for clip creation, MIDI sequencing, mixing, and device control. Five-stage pipeline from OSC bridge to reference-track analyzer (Demucs + librosa).',
-    tech: 'Python · Node.js · MCP · OSC · Anthropic SDK',
+    blurb: 'A dual-MCP-server architecture that exposes 40+ typed tools for Ableton Live, backed by an OSC bridge, sample indexing, session templates, and audio analysis.',
+    tech: 'Python / Node.js / MCP / OSC / Demucs / librosa',
   },
   {
+    eyebrow: 'Document intelligence',
     name: 'TortWin',
     href: 'https://github.com/blessdog/chronology_mvp',
-    blurb:
-      'Medical chronology MVP for personal injury law firms. AWS Textract Medical for OCR, BioClinicalBERT and scispaCy for entity extraction, timeline assembly with duplicate consolidation.',
-    tech: 'Python · FastAPI · React · PostgreSQL + pgvector · AWS Textract',
+    blurb: 'An end-to-end medical chronology pipeline: OCR, clinical entity extraction, timeline assembly, duplicate consolidation, API services, and vector-backed retrieval.',
+    tech: 'Python / FastAPI / React / PostgreSQL / AWS Textract',
   },
   {
+    eyebrow: 'Browser & workflow automation',
     name: 'JobCanon',
     href: 'https://github.com/blessdog/jobhard',
-    blurb:
-      'Multi-ATS job application automation — Workday, Greenhouse, Lever — on stable data-automation-id selectors with adaptive fallbacks. Local LLM resolves free-form dropdowns; IMAP polling handles email verification flows.',
-    tech: 'Python · Playwright · Ollama · TypeScript rebuild in progress',
+    blurb: 'Multi-ATS automation for Workday, Greenhouse, and Lever using stable selectors, adaptive fallbacks, local model-assisted field resolution, and IMAP verification flows.',
+    tech: 'Python / Playwright / TypeScript / Ollama / IMAP',
+  },
+];
+
+const EXPERIENCE = [
+  {
+    dates: '2024 - present',
+    role: 'Independent Software Engineer',
+    company: 'MatterMixers',
+    text: 'Own product architecture and implementation across native Swift apps, Python and TypeScript services, browser automation, data pipelines, and applied AI. Shipped working systems in voice, music tooling, legal-tech, and workflow automation.',
+  },
+  {
+    dates: '2023 - present',
+    role: 'Network Infrastructure Engineer (contract)',
+    company: 'Iron Systems',
+    text: 'Deploy and support LAN/WAN infrastructure at Meta data-center facilities, including Linux administration, network security, and fiber and copper plant work.',
+  },
+  {
+    dates: '2023',
+    role: 'Network Infrastructure Lead',
+    company: 'Meta data centers, via Ericsson',
+    text: 'Promoted from technician to project lead mid-engagement. Coordinated facility-wide deployments and QA/QC across project management, engineering, and on-site crews; completed the buildout on schedule.',
+  },
+  {
+    dates: '2021 - 2022',
+    role: 'Firmware Validation Engineer',
+    company: 'Micron Technology',
+    text: 'Built Python test automation for memory-controller and SSD firmware, debugged bench failures, caught regressions before production, and maintained C++ components in a distributed review workflow.',
   },
 ];
 
@@ -44,124 +62,153 @@ export async function homeView() {
   const wrap = document.createElement('div');
   wrap.className = 'home';
   wrap.innerHTML = `
-    <section class="section home__intro">
-      <h1 class="home__name">Ryan Anselman</h1>
-      <p class="home__tagline">
-        AI product engineer in Denver. Voice AI, MCP-driven agent systems,
-        NLP pipelines — designed, built, and shipped solo.
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Software + systems engineer / Denver, Colorado</p>
+      <h1 id="hero-title" class="hero__title">I build systems that have to work.</h1>
+      <p class="hero__lede">
+        My range runs from Python firmware validation and C++ components to data-center networks,
+        native Swift apps, production APIs, and applied AI. The through-line is systems ownership:
+        understand the constraints, make the interfaces explicit, and finish the job.
       </p>
-      <p class="home__facts">Open to full-time roles · US citizen, no sponsorship needed</p>
-      <p class="home__links">
-        <a href="/resume.pdf" target="_blank" rel="noopener">resume</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/blessdog" target="_blank" rel="noopener">github</a>
-        <span class="sep">·</span>
-        <a href="https://linkedin.com/in/ryan-anselman" target="_blank" rel="noopener">linkedin</a>
-        <span class="sep">·</span>
-        <a href="mailto:hire@anselman.com">hire@anselman.com</a>
-      </p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="/resume.pdf" target="_blank" rel="noopener">Read the resume <span aria-hidden="true">↗</span></a>
+        <a class="button" href="mailto:hire@anselman.com">hire@anselman.com</a>
+      </div>
+      <ul class="signal-bar" aria-label="Professional highlights">
+        <li>Firmware validation</li>
+        <li>Meta data centers</li>
+        <li>Full-stack products</li>
+        <li>Technical sales</li>
+      </ul>
     </section>
 
-    <section class="section">
-      <h2 class="section__title">About</h2>
-      <div class="section__body">
-        <p>
-          Since 2024 I've been building AI products end to end and shipping
-          them: Write-On, a macOS voice transcription app in daily production
-          use; YapZapp, voice-to-intent capture with LLM routing; BlessDog, a
-          dual-MCP-server system driving Ableton Live through 40+ agent tools;
-          TortWin, a clinical-NLP chronology pipeline; JobCanon, multi-ATS
-          browser automation. I work the full stack — Swift on macOS/iOS,
-          Python and TypeScript services, React and vanilla-JS frontends,
-          Postgres — and I ship.
-        </p>
-        <p>
-          Before that: firmware validation at Micron — Python test automation
-          for SSD and memory controllers — and network infrastructure
-          buildouts for Meta data centers, where I was promoted to project
-          lead mid-engagement and finished the buildout on schedule. Before
-          any of that I sold, door to door and then as a team lead carrying my
-          own quota — which is why customer discovery is part of how I build,
-          not a separate department.
-        </p>
+    <section class="section" aria-labelledby="range-title">
+      <div class="section__heading">
+        <p class="section__number">01</p>
+        <div>
+          <p class="eyebrow">Engineering range</p>
+          <h2 id="range-title">AI is one layer of the system, not the whole job.</h2>
+        </div>
+      </div>
+      <div class="capability-grid">
+        <article class="capability">
+          <p class="capability__index">A</p>
+          <h3>Validation & systems</h3>
+          <p>Python test automation, C++ firmware maintenance, Linux, hardware debugging, LAN/WAN deployment, network security, and infrastructure QA/QC.</p>
+        </article>
+        <article class="capability">
+          <p class="capability__index">B</p>
+          <h3>Product engineering</h3>
+          <p>Native macOS and iOS, backend services, browser automation, responsive web interfaces, PostgreSQL data models, Docker, and cloud integrations.</p>
+        </article>
+        <article class="capability">
+          <p class="capability__index">C</p>
+          <h3>Applied AI</h3>
+          <p>Streaming voice interfaces, typed tool protocols, OCR and NLP pipelines, retrieval, evaluations, and local-model workflows built into conventional software.</p>
+        </article>
       </div>
     </section>
 
-    <section class="section">
-      <h2 class="section__title">Selected work</h2>
-      <div class="section__body home__projects"></div>
+    <section class="section" aria-labelledby="experience-title">
+      <div class="section__heading">
+        <p class="section__number">02</p>
+        <div>
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">Software judgment grounded in physical systems.</h2>
+        </div>
+      </div>
+      <div class="experience-list"></div>
+      <p class="section__afterword">Earlier roles include field engineering for NCR, network deployments and Ekahau surveys for Kenyatta Computer Services, and full-cycle residential sales as a quota-carrying team lead.</p>
     </section>
 
-    <section class="section">
-      <h2 class="section__title">Elsewhere</h2>
-      <div class="section__body">
-        <p><a href="/feed">Notes feed</a> — things I'm building and thinking about, posted as they happen.</p>
+    <section class="section" aria-labelledby="work-title">
+      <div class="section__heading">
+        <p class="section__number">03</p>
+        <div>
+          <p class="eyebrow">Selected systems</p>
+          <h2 id="work-title">The proof is in the architecture.</h2>
+        </div>
+      </div>
+      <div class="systems-grid"></div>
+    </section>
+
+    <section class="section notes-preview" aria-labelledby="notes-title">
+      <div class="section__heading">
+        <p class="section__number">04</p>
+        <div>
+          <p class="eyebrow">Field notes</p>
+          <h2 id="notes-title">Short writing from the workbench.</h2>
+        </div>
+      </div>
+      <div class="notes-preview__list"></div>
+      <div class="notes-preview__footer">
+        <a class="text-link" href="/notes">All notes</a>
+        <a class="text-link" href="/feed.xml" target="_blank" rel="noopener">RSS feed</a>
       </div>
     </section>
 
-    <section class="section home__quote">
-      <h2 class="section__title">Quote of the day</h2>
-      <div class="section__body">
-        <p class="home__quote-text">&hellip;</p>
-        <p class="home__quote-author">&nbsp;</p>
-      </div>
+    <section class="contact" aria-labelledby="contact-title">
+      <p class="eyebrow">Open to the right full-time engineering role</p>
+      <h2 id="contact-title">Need someone who can cross the boundary between software and systems?</h2>
+      <p>US citizen. No sponsorship required. Based in Denver and open to remote or Colorado-based work.</p>
+      <a class="button button--primary" href="mailto:hire@anselman.com">Start a conversation <span aria-hidden="true">↗</span></a>
     </section>
   `;
 
-  const projectsEl = wrap.querySelector('.home__projects');
-  for (const p of PROJECTS) {
-    const art = document.createElement('article');
-    art.className = 'project';
-    art.innerHTML = `
-      <h3 class="project__name"><a href="${p.href}" target="_blank" rel="noopener">${esc(p.name)}</a></h3>
-      <p class="project__blurb">${esc(p.blurb)}</p>
-      <p class="project__tech">${esc(p.tech)}</p>
+  const experienceEl = wrap.querySelector('.experience-list');
+  for (const item of EXPERIENCE) {
+    const article = document.createElement('article');
+    article.className = 'experience';
+    article.innerHTML = `
+      <p class="experience__dates">${esc(item.dates)}</p>
+      <div class="experience__body">
+        <h3>${esc(item.role)}</h3>
+        <p class="experience__company">${esc(item.company)}</p>
+        <p>${esc(item.text)}</p>
+      </div>
     `;
-    projectsEl.appendChild(art);
+    experienceEl.appendChild(article);
   }
 
-  const [text, author] = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-  wrap.querySelector('.home__quote-text').textContent = `“${text}”`;
-  wrap.querySelector('.home__quote-author').textContent = `— ${author}`;
+  const systemsEl = wrap.querySelector('.systems-grid');
+  for (const system of SYSTEMS) {
+    const article = document.createElement('article');
+    article.className = 'system-card';
+    article.innerHTML = `
+      <p class="eyebrow">${esc(system.eyebrow)}</p>
+      <h3><a href="${esc(system.href)}" target="_blank" rel="noopener">${esc(system.name)} <span aria-hidden="true">↗</span></a></h3>
+      <p>${esc(system.blurb)}</p>
+      <p class="system-card__tech">${esc(system.tech)}</p>
+    `;
+    systemsEl.appendChild(article);
+  }
+
+  const notesEl = wrap.querySelector('.notes-preview__list');
+  for (const note of NOTES.slice(0, 2)) {
+    const article = document.createElement('article');
+    article.className = 'note-teaser';
+    article.innerHTML = `
+      <time datetime="${esc(note.date)}">${formatDate(note.date)}</time>
+      <h3><a href="/notes#${esc(note.slug)}">${esc(note.title)}</a></h3>
+      <p>${esc(note.dek)}</p>
+    `;
+    notesEl.appendChild(article);
+  }
 
   return wrap;
 }
 
-const QUOTES = [
-  ['Civilization is like a thin layer of ice upon a deep ocean of chaos and darkness.', 'Werner Herzog'],
-  ['The poet must not avert his eyes.', 'Werner Herzog'],
-  ['Tourism is sin, and travel on foot virtue.', 'Werner Herzog'],
-  ['Beauty is mysterious as well as terrible. God and the devil are fighting there, and the battlefield is the heart of man.', 'Fyodor Dostoevsky'],
-  ["Above all, don't lie to yourself.", 'Fyodor Dostoevsky'],
-  ['The mystery of human existence lies not in just staying alive, but in finding something to live for.', 'Fyodor Dostoevsky'],
-  ['Everyone thinks of changing the world, but no one thinks of changing himself.', 'Leo Tolstoy'],
-  ['No man ever steps in the same river twice, for it is not the same river and he is not the same man.', 'Heraclitus'],
-  ['Anxiety is the dizziness of freedom.', 'Søren Kierkegaard'],
-  ['Life can only be understood backwards; but it must be lived forwards.', 'Søren Kierkegaard'],
-  ['Whereof one cannot speak, thereof one must be silent.', 'Ludwig Wittgenstein'],
-  ['Attention is the rarest and purest form of generosity.', 'Simone Weil'],
-  ['All sins are attempts to fill voids.', 'Simone Weil'],
-  ['When I let go of what I am, I become what I might be.', 'Lao Tzu'],
-  ['The mind of the perfect man is like a mirror. It grasps nothing. It expects nothing. It reflects but does not hold.', 'Chuang Tzu'],
-  ['I have always imagined that Paradise will be a kind of library.', 'Jorge Luis Borges'],
-  ["Don't talk unless you can improve the silence.", 'Jorge Luis Borges'],
-  ['The inferno of the living is not something that will be; if there is one, it is what is already here, the inferno where we live every day.', 'Italo Calvino'],
-  ['Be patient toward all that is unsolved in your heart and try to love the questions themselves.', 'Rainer Maria Rilke'],
-  ['The only journey is the one within.', 'Rainer Maria Rilke'],
-  ['A book must be the axe for the frozen sea within us.', 'Franz Kafka'],
-  ['From a certain point onward there is no longer any turning back. That is the point that must be reached.', 'Franz Kafka'],
-  ['In the depth of winter, I finally learned that there was within me an invincible summer.', 'Albert Camus'],
-  ['Between the wish and the thing the world lies waiting.', 'Cormac McCarthy'],
-  ['You forget what you want to remember, and you remember what you want to forget.', 'Cormac McCarthy'],
-  ['How we spend our days is, of course, how we spend our lives.', 'Annie Dillard'],
-  ['We do not remember days, we remember moments.', 'Cesare Pavese'],
-  ['The richness of life lies in memories we have forgotten.', 'Cesare Pavese'],
-  ['Every man is born as many men and dies as a single one.', 'Martin Heidegger'],
-  ['Do not seek to follow in the footsteps of the wise. Seek what they sought.', 'Matsuo Bashō'],
-  ['Talent hits a target no one else can hit; genius hits a target no one else can see.', 'Arthur Schopenhauer'],
-  ["The past is never dead. It's not even past.", 'William Faulkner'],
-];
+function formatDate(value) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${value}T00:00:00Z`));
+}
 
-function esc(s) {
-  return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]);
 }

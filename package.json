@@ -5,16 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "generate:feed": "node scripts/generate-feed.mjs",
+    "generate:resume": "python3 scripts/generate-resume.py",
+    "build": "npm run generate:feed && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^8.0.10"
-  },
-  "dependencies": {
-    "@supabase/ssr": "^0.10.3",
-    "@supabase/supabase-js": "^2.106.2",
-    "dompurify": "^3.4.5",
-    "marked": "^18.0.4"
   }
 }
