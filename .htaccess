@@ -1,0 +1,8 @@
+# SPA fallback for Hostinger (LiteSpeed/Apache): serve index.html for any
+# path that isn't a real file, so /feed and /post deep links work.
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
