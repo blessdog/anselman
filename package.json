@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "generate:feed": "node scripts/generate-feed.mjs",
-    "generate:resume": "python3 scripts/generate-resume.py",
-    "build": "npm run generate:feed && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
